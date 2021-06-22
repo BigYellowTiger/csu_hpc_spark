@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=40
+#SBATCH --mem=40g
+#SBATCH --output=cal_res/poker2.out
+
+. setenv.sh
+fileName='train_2_poker_schema.csv'
+filePath='/public/home/hpc182212046/dataset/classification/processed/10-fold-dataset/'
+resultPath='/public/home/hpc182212046/dataset/result/'
+reduct_rate=0.5
+core_min=10
+parallel_num=32
+iteration_num=3
+singleGaIterNum=10
+sampleTimes=4
+sample_fraction=0.025
+mutationThreshold=24
+stop_sample='false'
+schema_read_on='false'
+/public/home/hpc182212046/big_data_env/spark/bin/spark-submit --driver-memory 39g --class main.Main jar/is.jar $filePath $fileName $resultPath $reduct_rate $core_min $parallel_num $iteration_num $singleGaIterNum $sampleTimes $sample_fraction $mutationThreshold $stop_sample $schema_read_on
